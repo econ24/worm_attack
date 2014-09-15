@@ -199,7 +199,7 @@ PauseMenu.prototype = Object.create(Menu.prototype);
 PauseMenu.prototype.constructor = PauseMenu;
 
 function DeadMenu() {
-	Menu.call(this, ['You died :(', 'start', 'options', 'exit']);
+	Menu.call(this, ['Yer dead :(', 'start', 'options', 'exit']);
 
 	this.MenuDraw = this.draw;
 

@@ -107,11 +107,11 @@ function Scroller() {
 
 		player();
 		if (!gameRect.collide(player.rect())) {
-			this.deathTransition(gameWindow, DEATH_BY_WALL);
+			this.transition(gameWindow, DEATH_BY_WALL, true);
 			return;
 		}
 		if (worm.checkCollision(player.rect())) {
-			this.deathTransition(gameWindow, DEATH_BY_WORM);
+			this.transition(gameWindow, DEATH_BY_WORM, true);
 			return;
 		}
 
@@ -137,14 +137,18 @@ function Scroller() {
 			worm.kill();
 			worm = Worm(player, gameArea)
 				.svg(gameWindow.group('worm-group'))
+			this.transition(gameWindow, LEVEL_CLEARED, false);
 		}
 	}
 
-	this.deathTransition = function(gameWindow, type) {
-		player.alive(false);
-		this.switchState(new DeathScreen(type));
-		this.terminateState();
+	this.transition = function(gameWindow, type, terminate) {
 		gameWindow.fade(0.5, 1000);
+		this.switchState(new TransitionScreen(type));
+		if (terminate) {
+			this.terminateState();
+			player.alive(false);
+		}
+console.log(player.alive())
 	}
 }
 Scroller.prototype = Object.create(State.prototype);
@@ -227,28 +231,32 @@ function GameArea() {
 	return area;
 }
 
-function DeathScreen(type) {
+function TransitionScreen(type) {
 	State.call(this);
 
 	var font, 
-		DEATH_TEXT = {},
+		TRANSITION_TEXT = {},
 		paused = true;
 
-	DEATH_TEXT[DEATH_BY_WALL] = [
+	TRANSITION_TEXT[DEATH_BY_WALL] = [
 		'You face planted#into the wall!',
 		'You became one#with the wall!',
 		'Your face#is now like a#wall-patty...',
 		'OUCH!!!#I felt that one!'
 	];
-	DEATH_TEXT[DEATH_BY_WORM] = [
+	TRANSITION_TEXT[DEATH_BY_WORM] = [
 		'You were chomped#by the worm!', 
 		'You became#worm food...',
 		'The worm#just made you its#...lunch...',
 		'Your doom#is a worm...'
 	];
+	TRANSITION_TEXT[LEVEL_CLEARED] = [
+		'Way to go!!!',
+		'Onward...#and#Upward!!!'
+	];
 
 	this.init = function(gameWindow) {
-		var text = DEATH_TEXT[type][Math.floor(Math.random()*DEATH_TEXT[type].length)].split('#'),
+		var text = TRANSITION_TEXT[type][Math.floor(Math.random()*TRANSITION_TEXT[type].length)].split('#'),
 			data = []
 			offset = 0;
 
@@ -280,11 +288,14 @@ function DeathScreen(type) {
 	this.process = function(input) {
 		if (input.length && !paused) {
 
-			this.switchState(new DeadMenu());
 			this.terminateState();
+
+			if (type != LEVEL_CLEARED) {
+				this.switchState(new DeadMenu());
+			}
 		}
 		while (input.pop());
 	}
 }
-DeathScreen.prototype = Object.create(State.prototype);
-DeathScreen.prototype.constructor = DeathScreen;
+TransitionScreen.prototype = Object.create(State.prototype);
+TransitionScreen.prototype.constructor = TransitionScreen;
