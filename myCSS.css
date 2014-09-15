@@ -1,0 +1,24 @@
+@font-face {
+	font-family: 'Pixel';
+	src: url('pixel-webfont.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.game-text {
+	font-family: 'Pixel';
+}
+
+#game-div {
+	margin: 0px;
+}
+
+#game-window {
+	position: absolute;
+	margin: auto;
+	display: block;
+	vertical-align: middle;
+	left: 0;
+	right: 0;
+	background-color: #000;
+}
