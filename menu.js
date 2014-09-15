@@ -11,7 +11,8 @@ function Menu(list) {
 
 	var small = 24,
 		medium = 48,
-		large = 72
+		large = 72,
+		gap = 10;
 
 	this.init = function(gameWindow) {
 		var titleData = [{ text: this.title, color: '#484', size: large, x: -1, y: 150, bold: true }];
@@ -58,7 +59,7 @@ function Menu(list) {
 		for (var i = 0; i < this.menuList.length; i++) {
 			var size = i == this.index ? medium : small;
 
-			offset += size+5;
+			offset += size+gap;
 
 			var obj = {
 				text: list[i],

@@ -4,8 +4,6 @@ function Input() {
 
 	this.buttonMap = null;
 
-	this.watchedButtons = {};
-
 	this.events = [];
 }
 
@@ -16,10 +14,6 @@ Input.prototype.init = function(buttonMap) {
 	window.addEventListener('keyup', this.keyup, true);
 
 	this.buttonMap = buttonMap;
-
-	for (var key in this.buttonMap) {
-		this.watchedButtons[key] = true;
-	}
 }
 
 Input.prototype.stop = function() {
@@ -30,7 +24,7 @@ Input.prototype.stop = function() {
 Input.prototype.keyDown = function(key) {
 	// console.log('pressed:', key.keyCode);
 	
-	if (key.keyCode in this.watchedButtons) {
+	if (key.keyCode in this.buttonMap) {
 		if (!this.keyboardState[key.keyCode]) {
 			this.events.push(this.buttonMap[key.keyCode]);
 		}
@@ -41,7 +35,7 @@ Input.prototype.keyDown = function(key) {
 Input.prototype.keyUp = function(key) {
 	// console.log('released:', key.keyCode);
 	
-	if (key.keyCode in this.watchedButtons) {
+	if (key.keyCode in this.buttonMap) {
 		this.events.push(-this.buttonMap[key.keyCode]);
 		this.keyboardState[key.keyCode] = 0;
 	}

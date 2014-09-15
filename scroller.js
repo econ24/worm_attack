@@ -142,7 +142,7 @@ function Scroller() {
 	}
 
 	this.transition = function(gameWindow, type, terminate) {
-		gameWindow.fade(0.5, 1000);
+		gameWindow.fade(0.33, 1000);
 		this.switchState(new TransitionScreen(type));
 		if (terminate) {
 			this.terminateState();
