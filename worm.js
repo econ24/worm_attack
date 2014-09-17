@@ -8,6 +8,16 @@ function Worm(player, gameArea) {
 		targets = [player],
 		speed;
 
+	var bounds = GameRect()
+			.top(BLOCK_SIZE*(scope.difficulty*3+2))
+			.left(BLOCK_SIZE*(scope.difficulty*3+2))
+			.width(BLOCK_SIZE*(GAME_SIZE-(scope.difficulty*3+2)*2))
+			.height(BLOCK_SIZE*(GAME_SIZE-(scope.difficulty*3+2)*2)),
+
+		center = GameRect()
+			.top(BLOCK_SIZE*Math.floor(GAME_SIZE/2))
+			.left(BLOCK_SIZE*Math.floor(GAME_SIZE/2));
+
 	var blockData = [
 		{ color: '#484', x: coords[0]*BLOCK_SIZE, y: coords[1]*BLOCK_SIZE, width: BLOCK_SIZE, height: BLOCK_SIZE },
 		{ color: '#484', x: coords[0]*BLOCK_SIZE, y: coords[1]*BLOCK_SIZE, width: BLOCK_SIZE, height: BLOCK_SIZE }
@@ -87,6 +97,7 @@ function Worm(player, gameArea) {
 	worm.checkCollision = function(objRect) {
 		return rects.reduce(function(prev, rect) { return prev || rect.collide(objRect); }, false);
 	}
+
 	worm.update = function(player, item, gameRect) {
 		var index = targets.indexOf(item);
 
@@ -102,8 +113,19 @@ function Worm(player, gameArea) {
 			targets.splice(index, 1);
 		}
 
-		var target = targets[0].rect(),
-			head = rects[0],
+		var target = targets[0].rect();
+
+		if (target == player.rect() && (!bounds.collide(rects[0]) || !bounds.collide(player.rect()))) {
+			target = item.active() ? item.rect() : center;
+		}
+		// if (target == player.rect() && !bounds.collide(player.rect())) {
+		// 	target = item.active() ? item.rect() : center;
+		// }
+		if (rects[0].distance(player.rect()) < BLOCK_SIZE*1.5) {
+			target = player.rect();
+		}
+
+		var head = rects[0],
 
 			targetX = target.left(),
 			targetY = target.top(),
@@ -185,15 +207,13 @@ function Worm(player, gameArea) {
 		coords = [coords[0] + (m.x || m[0]),
 				  coords[1] + (m.y || m[1])];
 	}
-	worm.getCoords = function() {
-		return coords;
-	}
 
 	function randomSpawn() {
 		var x = GAME_SIZE/2,
 			y = GAME_SIZE/2;
 
-		while( !( ((x === 0 || y === 0) && x !== y) || ((x === GAME_SIZE-1 || y === GAME_SIZE-1) && x !== y) ) )  {
+		while( !( ((x === 0 || y === 0) && x !== y && x+y != GAME_SIZE-1) || 
+			      ((x === GAME_SIZE-1 || y === GAME_SIZE-1) && x !== y && x+y != GAME_SIZE-1) ) )  {
 			x = Math.floor(Math.random()*GAME_SIZE);
 			y = Math.floor(Math.random()*GAME_SIZE);
 		}

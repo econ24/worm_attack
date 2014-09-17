@@ -148,7 +148,6 @@ function Scroller() {
 			this.terminateState();
 			player.alive(false);
 		}
-console.log(player.alive())
 	}
 }
 Scroller.prototype = Object.create(State.prototype);

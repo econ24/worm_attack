@@ -8,7 +8,7 @@
 	}
 
 	scope.maxBombs = function() {
-		return [3, 4, 5][scope.difficulty];
+		return [5, 4, 3][scope.difficulty];
 	}
 
 	scope.level = 1;

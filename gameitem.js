@@ -55,8 +55,7 @@ function GameItem() {
 		return 4000 + Math.round(Math.random() * 4000);
 	}
 	function spawn(gameRect, worm) {
-		var coords = worm.getCoords();
-		rect.topleft([coords[0]*BLOCK_SIZE, coords[1]*BLOCK_SIZE]);
+		rect.topleft(worm.getRects()[0].topleft());
 
 		var minDistance = BLOCK_SIZE*(14-scope.difficulty*2),
 			maxTries = 50;
