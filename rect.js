@@ -4,9 +4,8 @@ function GameRect() {
 		width = BLOCK_SIZE,
 		height = BLOCK_SIZE;
 
-	function rect() {
-
-	}
+	var rect = {};
+	
 	rect.top = function(t) {
 		if (!arguments.length) {
 			return top;	
