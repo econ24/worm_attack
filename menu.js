@@ -91,7 +91,7 @@ function StartMenu() {
 	this.makeSelection = function() {
 		switch(this.menuList[this.index]) {
 			case 'start':
-				this.switchState(new Scroller());
+				this.switchState(new WormAttack());
 				this.terminateState();
 				break;
 			case 'options':

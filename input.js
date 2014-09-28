@@ -42,27 +42,5 @@ Input.prototype.keyUp = function(key) {
 }
 
 Input.prototype.getInput = function() {
-	var prevButtons = this.buttons;
-
-	this.buttons = this.getKeyboardState();
-
 	return this.events;
-}
-
-Input.prototype.getKeyboardState = function() {
-	var buttons = 0;
-
-	for (var key in this.buttonMap) {
-		var code = key,
-			action = this.buttonMap[key];
-		if (this.keyboardState[code]) {
-			buttons |= action;
-		}
-	}
-
-	return buttons;
-}
-
-Input.prototype.checkButton = function(button) {
-	return this.buttons & button;
 }
