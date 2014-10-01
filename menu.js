@@ -35,13 +35,13 @@ function Menu(list) {
 		while (input.length) {
 			button = input.shift();
 
-			if (button == MOVE_UP_DOWN) {
+			if (button == MOVE_UP) {
 				this.index -= 1;
 			}
-			else if (button == MOVE_DOWN_DOWN) {
+			else if (button == MOVE_DOWN) {
 				this.index += 1;
 			}
-			else if (button == ENTER_DOWN) {
+			else if (button == ENTER) {
 				this.makeSelection();
 			}
 
@@ -117,19 +117,19 @@ function OptionsMenu() {
 		while (input.length) {
 			button = input.shift();
 
-			if (button == MOVE_UP_DOWN) {
+			if (button == MOVE_UP) {
 				this.index -= 1;
 			}
-			else if (button == MOVE_DOWN_DOWN) {
+			else if (button == MOVE_DOWN) {
 				this.index += 1;
 			}
-			else if (button == ENTER_DOWN) {
+			else if (button == ENTER) {
 				this.makeSelection();
 			}
-			else if (button == MOVE_LEFT_DOWN) {
+			else if (button == MOVE_LEFT) {
 				this.changeOption(-1);
 			}
-			else if (button == MOVE_RIGHT_DOWN) {
+			else if (button == MOVE_RIGHT) {
 				this.changeOption(1);
 			}
 

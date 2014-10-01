@@ -1,6 +1,6 @@
 function Input() {
-	this.buttons = 0;
 	this.keyboardState = {};
+	this.buttonState = {};
 
 	this.buttonMap = null;
 
@@ -28,6 +28,7 @@ Input.prototype.keyDown = function(key) {
 		if (!this.keyboardState[key.keyCode]) {
 			this.events.push(this.buttonMap[key.keyCode]);
 		}
+		this.buttonState[this.buttonMap[key.keyCode]] = key.timeStamp;
 		this.keyboardState[key.keyCode] = key.timeStamp;
 	}
 }
@@ -37,10 +38,15 @@ Input.prototype.keyUp = function(key) {
 	
 	if (key.keyCode in this.buttonMap) {
 		this.events.push(-this.buttonMap[key.keyCode]);
+		this.buttonState[this.buttonMap[key.keyCode]] = 0;
 		this.keyboardState[key.keyCode] = 0;
 	}
 }
 
 Input.prototype.getInput = function() {
 	return this.events;
+}
+
+Input.prototype.checkButtonPress = function(button) {
+	return this.buttonState[button];
 }

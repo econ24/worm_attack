@@ -17,8 +17,6 @@ Shell.prototype.init = function(state, svgID) {
 	this.gameWindow.init(d3.select(svgID));
 
 	this.state.init(this.gameWindow);
-
-
 }
 
 Shell.prototype.start = function() {
@@ -44,7 +42,7 @@ Shell.prototype.run = function() {
 		this.stop();
 	}
 	else {
-		time = Math.max(0, FRAME_TIME - (Date.now() - time));
+		time = Math.max(1, FRAME_TIME - (Date.now() - time));
 		setTimeout(this.run.bind(this), time);
 	}
 }

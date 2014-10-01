@@ -73,22 +73,22 @@ function WormAttack() {
 	this.process = function(input) {
 		while (input.length) {
 			switch (input.shift()) {
-				case OPEN_MENU_DOWN:
+				case OPEN_MENU:
 					this.switchState(new PauseMenu());
 					break;
-				case MOVE_LEFT_DOWN:
+				case MOVE_LEFT:
 					player.direction([-1, 0]);
 					break;
-				case MOVE_RIGHT_DOWN:
+				case MOVE_RIGHT:
 					player.direction([1, 0]);
 					break;
-				case MOVE_UP_DOWN:
+				case MOVE_UP:
 					player.direction([0, -1]);
 					break;
-				case MOVE_DOWN_DOWN:
+				case MOVE_DOWN:
 					player.direction([0, 1]);
 					break;
-				case DROP_BOMB_DOWN:
+				case DROP_BOMB:
 					var coords;
 					if (coords = player.dropBomb()) {
 						bombs.drop(coords);
